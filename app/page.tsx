@@ -7,7 +7,7 @@ import { Card } from '~/components'
 import { SITE_CONFIG } from '~/constant'
 
 const notion = new Client({
-  auth: 'secret_XCVvCFdlfSZOyLPvs8xb7qCABBCHy1qieCs8eA8u5eQ',
+  auth: process.env.NOTION_SECRET_KEY,
 })
 
 const Home = () => {
