@@ -28,7 +28,11 @@ const config: Config = {
         'sans-serif',
       ],
     },
-    extend: {},
+    extend: {
+      colors: {
+        dark: '#1C1C1CFF',
+      },
+    },
   },
   plugins: [],
 }
