@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { Grid } from '~/components'
 import { SITE_CONFIG } from '~/constant'
 
 import './globals.css'
@@ -20,14 +21,15 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <link rel="icon" href="https://og.freevue.dev/api/favicon" />
       </head>
       <body>
-        <main className="max-w-[1200px] mx-auto">
-          <header>
+        <main>
+          <header className="fixed top-0 left-0 right-0 h-[30px] bg-dark px-[30px] py-[10px]">
             <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
               {SITE_CONFIG.TITLE}
             </Link>
           </header>
           {children}
         </main>
+        {process.env.NODE_ENV !== 'production' && <Grid />}
       </body>
     </html>
   )
