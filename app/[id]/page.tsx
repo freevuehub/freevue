@@ -1,9 +1,7 @@
-import { getPost } from '~/API'
+import { getPost, getPostBySlug } from '~/API'
 import { isUndefined } from '@fxts/core'
 
-import type { NextPage } from 'next'
-
-import type { Metadata } from 'next'
+import type { NextPage, Metadata } from 'next'
 
 type Params = {
   params: {
@@ -12,20 +10,24 @@ type Params = {
 }
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
-  const data = await getPost(props.params.id)
+  try {
+    const data = await getPost(props.params.id)
 
-  if (isUndefined(data) || !('properties' in data)) {
+    if (isUndefined(data) || !('properties' in data)) {
+      return {}
+    }
+
+    const { title, thumbnail, summary } = data.properties as any
+
+    return {
+      title: title.title[0].plain_text,
+      openGraph: {
+        images: [thumbnail.files[0].name],
+      },
+      description: summary.rich_text[0].plain_text,
+    }
+  } catch {
     return {}
-  }
-
-  const { title, thumbnail, summary } = data.properties as any
-
-  return {
-    title: title.title[0].plain_text,
-    openGraph: {
-      images: [thumbnail.files[0].name],
-    },
-    description: summary.rich_text[0].plain_text,
   }
 }
 

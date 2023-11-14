@@ -42,14 +42,45 @@ export const getPostList = async () => {
   }
 }
 
-export const getPost = async (id: string) => {
-  return pipe(
-    [
-      notion.pages.retrieve({
-        page_id: id,
-      }),
-    ],
-    toAsync,
-    head
-  )
+export const getPostBySlug = async (id: string) => {
+  return await notion.databases.query({
+    database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
+    filter: {
+      or: [
+        {
+          property: 'slug',
+          type: 'rich_text',
+          rich_text: {
+            equals: id,
+          },
+        },
+      ],
+    },
+  })
 }
+
+export const getPost = async (id: string) => {
+  try {
+    return await pipe(
+      [
+        notion.pages.retrieve({
+          page_id: id,
+        }),
+      ],
+      toAsync,
+      head
+    )
+  } catch {
+    const { results } = await getPostBySlug(id)
+
+    if (results.length) {
+      return await notion.pages.retrieve({
+        page_id: results[0].id,
+      })
+    }
+
+    return {}
+  }
+}
+
+export default notion
