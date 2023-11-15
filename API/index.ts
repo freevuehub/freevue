@@ -1,6 +1,10 @@
 import { Client } from '@notionhq/client'
 import { pipe, prop, toAsync, head, toArray } from '@fxts/core'
-import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
+import {
+  BlockObjectResponse,
+  PageObjectResponse,
+  PartialUserObjectResponse,
+} from '@notionhq/client/build/src/api-endpoints'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
@@ -8,7 +12,7 @@ const notion = new Client({
 
 export const getPostList = async () => {
   try {
-    const data = (await pipe(
+    return (await pipe(
       [
         notion.databases.query({
           database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
@@ -37,35 +41,38 @@ export const getPostList = async () => {
       head,
       prop('results')
     )) as PageObjectResponse[]
-
-    console.log(data)
-
-    return data
   } catch {
     return []
   }
 }
 
 export const getPostBySlug = async (id: string) => {
-  return await notion.databases.query({
-    database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
-    filter: {
-      or: [
-        {
-          property: 'slug',
-          type: 'rich_text',
-          rich_text: {
-            equals: id,
-          },
+  return (await pipe(
+    [
+      notion.databases.query({
+        database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
+        filter: {
+          or: [
+            {
+              property: 'slug',
+              type: 'rich_text',
+              rich_text: {
+                equals: id,
+              },
+            },
+          ],
         },
-      ],
-    },
-  })
+      }),
+    ],
+    toAsync,
+    head,
+    prop('results')
+  )) as PageObjectResponse[]
 }
 
 export const getPost = async (id: string) => {
   try {
-    return await pipe(
+    return (await pipe(
       [
         notion.pages.retrieve({
           page_id: id,
@@ -73,17 +80,27 @@ export const getPost = async (id: string) => {
       ],
       toAsync,
       head
-    )
+    )) as PageObjectResponse
   } catch {
-    const { results } = await getPostBySlug(id)
+    const [post] = await getPostBySlug(id)
 
-    if (results.length) {
-      return await notion.pages.retrieve({
-        page_id: results[0].id,
-      })
+    if (!!post) {
+      return (await notion.pages.retrieve({
+        page_id: post.id,
+      })) as PageObjectResponse
     }
 
-    return {}
+    return {
+      created_by: {},
+      last_edited_by: {},
+      object: 'page',
+      id: '',
+      created_time: '',
+      last_edited_time: '',
+      archived: false,
+      url: '',
+      public_url: '',
+    }
   }
 }
 
