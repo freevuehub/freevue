@@ -1,7 +1,6 @@
 import { Client } from '@notionhq/client'
 import { pipe, prop, toAsync, head, toArray } from '@fxts/core'
-
-import { GetPageResponse } from '@notionhq/client/build/src/api-endpoints'
+import { PageObjectResponse } from '@notionhq/client/build/src/api-endpoints'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
@@ -9,10 +8,11 @@ const notion = new Client({
 
 export const getPostList = async () => {
   try {
-    return await pipe(
+    const data = (await pipe(
       [
         notion.databases.query({
           database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
+          // page_size: 10,
           filter: {
             or: [
               {
@@ -36,7 +36,11 @@ export const getPostList = async () => {
       toAsync,
       head,
       prop('results')
-    )
+    )) as PageObjectResponse[]
+
+    console.log(data)
+
+    return data
   } catch {
     return []
   }

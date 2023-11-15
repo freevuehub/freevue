@@ -1,12 +1,21 @@
 'use server'
 
 import Link from 'next/link'
-import { pipe, map, toArray } from '@fxts/core'
+import { pipe, map, toArray, toAsync } from '@fxts/core'
 import { Card } from '~/components'
 import { getPostList } from '~/API'
 
 const Home = async () => {
-  const data = (await getPostList()) as any[]
+  const data = await pipe(
+    '',
+    getPostList,
+    toAsync,
+    map(({ id, properties }) => ({
+      id,
+      title: 'title' in properties.title ? properties.title.title[0].plain_text : '',
+    })),
+    toArray
+  )
 
   return (
     <>
@@ -15,10 +24,10 @@ const Home = async () => {
       </Card>
       {pipe(
         data,
-        map((item: any) => (
+        map((item) => (
           <Link key={item.id} href={`/${item.id}`}>
             <Card>
-              <p className="dark:text-white">{item.properties.title.title[0].plain_text}</p>
+              <p className="dark:text-white">{item.title}</p>
             </Card>
           </Link>
         )),
