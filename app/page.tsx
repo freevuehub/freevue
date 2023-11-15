@@ -5,7 +5,9 @@ import { pipe, map, toArray, toAsync } from '@fxts/core'
 import { Card } from '~/components'
 import { getPostList } from '~/API'
 
-const Home = async () => {
+import type { NextPage } from 'next'
+
+const Home: NextPage = async () => {
   const data = await pipe(
     '',
     getPostList,
