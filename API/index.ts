@@ -1,10 +1,8 @@
 import { Client } from '@notionhq/client'
-import { pipe, prop, toAsync, head, toArray } from '@fxts/core'
-import {
-  BlockObjectResponse,
-  PageObjectResponse,
-  PartialUserObjectResponse,
-} from '@notionhq/client/build/src/api-endpoints'
+import { pipe, prop, toAsync, head, toArray, map } from '@fxts/core'
+import { DB_ID } from '~/constant'
+
+import type { PageObjectResponse, PostProperties } from '~/types'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
@@ -13,34 +11,44 @@ const notion = new Client({
 export const getPostList = async () => {
   try {
     return (await pipe(
-      [
-        notion.databases.query({
-          database_id: 'aaffdb0decad4da5ac6c15456dfe22f7',
-          // page_size: 10,
-          filter: {
-            or: [
-              {
-                property: 'type',
-                type: 'select',
-                select: {
-                  equals: 'Post',
-                },
+      notion.databases.query({
+        database_id: DB_ID,
+        // page_size: 10,
+        filter: {
+          or: [
+            {
+              property: 'type',
+              type: 'select',
+              select: {
+                equals: 'Post',
               },
-              {
-                property: 'status',
-                type: 'select',
-                select: {
-                  equals: 'Public',
-                },
+            },
+            {
+              property: 'status',
+              type: 'select',
+              select: {
+                equals: 'Public',
               },
-            ],
-          },
-        }),
-      ],
-      toAsync,
-      head,
-      prop('results')
-    )) as PageObjectResponse[]
+            },
+          ],
+        },
+      }),
+      prop('results'),
+      map((item) => ({
+        id: item.id,
+        properties: 'properties' in item ? item.properties : {},
+      })),
+      map((item) => ({
+        ...item,
+        title: item.properties.title,
+        thumbnail: item.properties.thumbnail,
+        summary: item.properties.summary,
+        tags: item.properties.tags,
+        category: item.properties.category,
+        date: item.properties.date,
+      })),
+      toArray
+    )) as PostProperties[]
   } catch {
     return []
   }
