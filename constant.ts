@@ -5,5 +5,13 @@ export const SITE_CONFIG = {
 
 export const PROPERTIES_ID = {
   TITLE: 'title',
-  thumbnail: 'WxpT',
+  THUMBNAIL: 'WxpT',
+  CATEGORY: 'ppED',
+  SLUG: 'd%5Dhq',
+  DATE: 'NX%5CQ',
+  TAGS: 'sD%5Em',
+  SUMMARY: 'wz%7CS',
+  UPDATED_AT: 'zyLz',
 }
+
+export const DB_ID = 'aaffdb0decad4da5ac6c15456dfe22f7'
