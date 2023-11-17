@@ -30,14 +30,17 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </header>
           <section className="flex">
-            <nav className="w-[310px] bg-red-800 fixed left-0 top-[50px] h-full">Navigation</nav>
-            <div className="w-[954px] mx-auto">{children}</div>
-            <aside className="w-[310px] bg-red-800 fixed right-0 top-[50px] h-full">
+            <nav className="w-[300px] bg-red-800 fixed left-0 top-[50px] h-full hidden laptop:block">
+              <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
+                {SITE_CONFIG.TITLE}
+              </Link>
+            </nav>
+            <div className="desktop:w-[948px] laptop:w-[648px] mx-auto">{children}</div>
+            <aside className="w-[300px] bg-red-800 fixed right-0 top-[50px] h-full hidden laptop:block">
               Navigation
             </aside>
           </section>
         </main>
-        {/*{process.env.NODE_ENV !== 'production' && <Grid />}*/}
       </body>
     </html>
   )
