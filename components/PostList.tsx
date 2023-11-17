@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { map, pipe, size, toArray } from '@fxts/core'
 import { Card } from '~/components'
 

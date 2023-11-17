@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import { Grid } from '~/components'
 import { SITE_CONFIG } from '~/constant'
 
 import './globals.css'
