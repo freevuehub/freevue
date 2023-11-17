@@ -25,6 +25,11 @@
   }
 }
 
+/**
+* Gutter: 24px
+* Grid: 138px
+*/
+
 body {
   font-family:
     'Pretendard Variable',
@@ -43,4 +48,13 @@ body {
     'Segoe UI Symbol',
     sans-serif;
   background-color: #1C1C1CFF;
+}
+
+html, body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+html::-webkit-scrollbar, body::-webkit-scrollbar {
+  display: none;
 }
