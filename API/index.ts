@@ -2,7 +2,7 @@ import { Client } from '@notionhq/client'
 import { pipe, prop, toAsync, head, toArray, map } from '@fxts/core'
 import { DB_ID } from '~/constant'
 
-import type { PageObjectResponse, PostProperties } from '~/types'
+import type { PageObjectResponse, PostProperties, ListBlockChildrenResponse } from '~/types'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
@@ -80,7 +80,7 @@ export const getPostBySlug = async (id: string) => {
 
 export const getPost = async (id: string) => {
   try {
-    return await pipe(
+    return (await pipe(
       [
         new Promise(async (resolve) => {
           const data = await notion.pages.retrieve({
@@ -99,27 +99,49 @@ export const getPost = async (id: string) => {
       ],
       toAsync,
       toArray
-    )
+    )) as [PageObjectResponse, ListBlockChildrenResponse]
   } catch {
     const [post] = await getPostBySlug(id)
 
     if (!!post) {
-      return (await notion.pages.retrieve({
-        page_id: post.id,
-      })) as PageObjectResponse
+      return (await pipe(
+        [
+          new Promise(async (resolve) => {
+            const data = await notion.pages.retrieve({
+              page_id: post.id,
+            })
+
+            return resolve(data)
+          }),
+          new Promise(async (resolve) => {
+            const data = await notion.blocks.children.list({
+              block_id: post.id,
+            })
+
+            return resolve(data)
+          }),
+        ],
+        toAsync,
+        toArray
+      )) as [PageObjectResponse, ListBlockChildrenResponse]
     }
 
-    return {
-      created_by: {},
-      last_edited_by: {},
-      object: 'page',
-      id: '',
-      created_time: '',
-      last_edited_time: '',
-      archived: false,
-      url: '',
-      public_url: '',
-    }
+    return [
+      {
+        created_by: {},
+        last_edited_by: {},
+        object: 'page',
+        id: '',
+        created_time: '',
+        last_edited_time: '',
+        archived: false,
+        url: '',
+        public_url: '',
+      },
+      {
+        results: [],
+      },
+    ]
   }
 }
 
