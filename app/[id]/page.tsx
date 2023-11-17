@@ -1,5 +1,5 @@
 import { getPost } from '~/API'
-import { toAsync, pipe, toArray } from '@fxts/core'
+import { pipe } from '@fxts/core'
 import { PostDetail } from '~/components'
 
 import type { NextPage, Metadata } from 'next'
