@@ -12,19 +12,19 @@ type Params = {
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   try {
-    // const data = await getPost(props.params.id)
-    //
-    // if ('properties' in data) {
-    //   const { title, thumbnail, summary } = data.properties
-    //
-    //   return {
-    //     title: 'title' in title ? title.title[0].plain_text : '',
-    //     openGraph: {
-    //       images: ['files' in thumbnail ? thumbnail.files[0].name : ''],
-    //     },
-    //     description: 'rich_text' in summary ? summary.rich_text[0].plain_text : '',
-    //   }
-    // }
+    const [data] = await getPost(props.params.id)
+
+    if ('properties' in data) {
+      const { title, thumbnail, summary } = data.properties
+
+      return {
+        title: 'title' in title ? title.title[0].plain_text : '',
+        openGraph: {
+          images: ['files' in thumbnail ? thumbnail.files[0].name : ''],
+        },
+        description: 'rich_text' in summary ? summary.rich_text[0].plain_text : '',
+      }
+    }
 
     return {}
   } catch {
@@ -50,7 +50,7 @@ const Post: NextPage<Params> = async (props) => {
           alt={'title' in title ? title.title[0].plain_text : ''}
         />
       )}
-      <PostDetail list={blocks.results} />
+      <PostDetail list={blocks.results || []} />
     </div>
   )
 }
