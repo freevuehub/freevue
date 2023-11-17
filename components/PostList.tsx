@@ -22,10 +22,8 @@ const PostList: React.FC<IProps> = (props) => {
     toArray
   )
 
-  console.log(list)
-
   return (
-    <div className="flex flex-wrap justify-center gap-[24px]">
+    <div className="flex flex-wrap justify-center gap-[24px] px-[24px] laptop:px-[0]">
       {pipe(
         list,
         map((item) => (
