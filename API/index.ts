@@ -80,15 +80,26 @@ export const getPostBySlug = async (id: string) => {
 
 export const getPost = async (id: string) => {
   try {
-    return (await pipe(
+    return await pipe(
       [
-        notion.pages.retrieve({
-          page_id: id,
+        new Promise(async (resolve) => {
+          const data = await notion.pages.retrieve({
+            page_id: id,
+          })
+
+          return resolve(data)
+        }),
+        new Promise(async (resolve) => {
+          const data = await notion.blocks.children.list({
+            block_id: id,
+          })
+
+          return resolve(data)
         }),
       ],
       toAsync,
-      head
-    )) as PageObjectResponse
+      toArray
+    )
   } catch {
     const [post] = await getPostBySlug(id)
 
