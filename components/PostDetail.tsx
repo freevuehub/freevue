@@ -7,8 +7,6 @@ type Props = {
 }
 
 const PostDetail: React.FC<Props> = (props) => {
-  console.log(props)
-
   return (
     <div>
       {pipe(
