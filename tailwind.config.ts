@@ -33,6 +33,10 @@ const config: Config = {
         dark: '#1C1C1CFF',
       },
     },
+    screens: {
+      desktop: '1644px',
+      laptop: '1368px',
+    },
   },
   plugins: [],
 }
