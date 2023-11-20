@@ -1,5 +1,8 @@
 import Link from 'next/link'
+import { pipe, map, toArray, prop } from '@fxts/core'
+import { getPostList } from '~/API'
 import { SITE_CONFIG } from '~/constant'
+import { NavList } from '~/components'
 
 import './globals.css'
 
@@ -13,7 +16,16 @@ export const metadata: Metadata = {
   description: SITE_CONFIG.DESCRIPTION,
 }
 
-const RootLayout = ({ children }: { children: React.ReactNode }) => {
+const RootLayout = async ({ children }: { children: React.ReactNode }) => {
+  const data = await pipe(
+    '',
+    getPostList,
+    map((item) => prop('properties', item)),
+    map((item) => prop('category', item)),
+    map((item) => prop('select', item)),
+    toArray
+  )
+
   return (
     <html lang="ko" className="dark">
       <head>
@@ -21,7 +33,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <main className="pt-[50px]">
-          <header className="fixed top-0 left-0 right-0 h-[50px] bg-dark flex items-center">
+          <header className="fixed top-0 left-0 right-0 h-[50px] bg-dark flex items-center dark:bg-[#282828] z-50">
             <div className="w-[310px] text-center">
               <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
                 {SITE_CONFIG.TITLE}
@@ -29,13 +41,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
             </div>
           </header>
           <section className="flex">
-            <nav className="w-[300px] bg-red-800 fixed left-0 top-[50px] h-full hidden laptop:block">
-              <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
-                {SITE_CONFIG.TITLE}
-              </Link>
+            <nav className="w-[300px] bg-red-800 fixed left-0 top-[50px] h-full hidden laptop:block dark:bg-[#282828]">
+              <NavList list={data} />
             </nav>
-            <div className="desktop:w-[948px] laptop:w-[648px] mx-auto">{children}</div>
-            <aside className="w-[300px] bg-red-800 fixed right-0 top-[50px] h-full hidden laptop:block">
+            <div className="desktop:w-[948px] laptop:w-[648px] mx-auto py-[24px]">{children}</div>
+            <aside className="w-[300px] bg-red-800 fixed right-0 top-[50px] h-full hidden laptop:block dark:bg-[#282828]">
               Navigation
             </aside>
           </section>
