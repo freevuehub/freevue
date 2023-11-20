@@ -31,6 +31,7 @@ const config: Config = {
     extend: {
       colors: {
         dark: '#1C1C1CFF',
+        primary: '#bb2649',
       },
     },
     screens: {
