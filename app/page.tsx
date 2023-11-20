@@ -1,6 +1,6 @@
 'use server'
 
-import { Card, PostList } from '~/components'
+import { PostList } from '~/components'
 import { getPostList } from '~/API'
 
 import type { NextPage } from 'next'
