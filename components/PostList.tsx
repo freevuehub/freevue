@@ -28,7 +28,7 @@ const PostList: React.FC<IProps> = (props) => {
         map((item) => (
           <Link key={item.id} href={`/${item.id}`} className="w-[300px]">
             <Card>
-              {size(item.thumbnail) && <img src={item.thumbnail[0].name} alt="" />}
+              {/*{size(item.thumbnail) && <img src={item.thumbnail[0].name} alt="" />}*/}
               <div className="p-[12px]">
                 <p className="dark:text-white">{item.title}</p>
               </div>
