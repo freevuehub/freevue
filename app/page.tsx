@@ -10,9 +10,6 @@ const Home: NextPage = async () => {
 
   return (
     <>
-      <Card className="my-[120px]">
-        <p className="dark:text-white">배포 실수로 블로그 날라감..</p>
-      </Card>
       <PostList list={data} />
     </>
   )
