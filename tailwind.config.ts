@@ -32,6 +32,7 @@ const config: Config = {
       colors: {
         dark: '#1C1C1CFF',
         primary: '#bb2649',
+        content: '#282828',
       },
     },
     screens: {
