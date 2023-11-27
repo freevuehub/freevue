@@ -29,7 +29,8 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <html lang="ko" className="dark">
       <head>
-        <link rel="icon" href="https://og.freevue.dev/api/favicon" />
+        <link rel="icon" href="/icon" sizes="32x32" />
+        <link rel="apple-touch-icon" href="/icon" sizes="32x32" />
       </head>
       <body>
         <main className="pt-[50px]">
