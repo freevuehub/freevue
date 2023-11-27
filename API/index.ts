@@ -5,6 +5,7 @@ import { property } from '@notion/util'
 import { DB_ID, INITIAL_NOTION_PROPERTIES } from '~/constant'
 
 import type { PageObjectResponse, PostProperties } from '~/types'
+import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
@@ -27,7 +28,7 @@ const pageToMarkdown = async (id: string) => {
   }
 }
 
-export const getPostList = async () => {
+export const getPostList = async (equals?: string) => {
   try {
     return (await pipe(
       notion.databases.query({
@@ -47,6 +48,13 @@ export const getPostList = async () => {
               type: 'select',
               select: {
                 equals: 'Public',
+              },
+            },
+            {
+              property: 'category',
+              type: 'select',
+              select: {
+                equals: equals || '',
               },
             },
           ],

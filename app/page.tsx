@@ -4,9 +4,12 @@ import { PostList } from '~/components'
 import { getPostList } from '~/API'
 
 import type { NextPage } from 'next'
+import type { NextProps } from '~/types'
 
-const Home: NextPage = async () => {
-  const data = await getPostList()
+type Props = {} & NextProps
+
+const Home: NextPage<Props> = async (props) => {
+  const data = await getPostList(props.searchParams.c)
 
   return (
     <>
