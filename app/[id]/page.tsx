@@ -1,6 +1,9 @@
-import { getPost } from '~/API'
-import { pipe } from '@fxts/core'
-import { PostDetail } from '~/components'
+'use server'
+
+import { getPageBlocks, getPageProperties, getPagePropertyById } from '~/API'
+import { pipe, head, prop } from '@fxts/core'
+import { property } from '@notion/util'
+import { Markdown } from '~/components'
 
 import type { NextPage, Metadata } from 'next'
 
@@ -12,45 +15,30 @@ type Params = {
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   try {
-    const [data] = await getPost(props.params.id)
+    const data = await pipe(props.params.id, getPageProperties)
 
-    if ('properties' in data) {
-      const { title, thumbnail, summary } = data.properties
+    const { title, thumbnail, summary } = data.properties
 
-      return {
-        title: 'title' in title ? title.title[0].plain_text : '',
-        openGraph: {
-          images: ['files' in thumbnail ? thumbnail.files[0].name : ''],
-        },
-        description: 'rich_text' in summary ? summary.rich_text[0].plain_text : '',
-      }
+    return {
+      title: pipe(title, property('title'), head, prop('plain_text')) || '',
+      openGraph: {
+        images: [pipe(thumbnail, property('files'), head, prop('name')) || ''],
+      },
+      description: pipe(summary, property('rich_text'), head, prop('plain_text')) || '',
     }
-
-    return {}
   } catch {
     return {}
   }
 }
 
 const Post: NextPage<Params> = async (props) => {
-  const [data, blocks] = await pipe(props.params.id, getPost)
-
-  if (!('properties' in data)) {
-    return <div>No Data</div>
-  }
-
-  const { title, thumbnail } = data.properties
+  const markdownString = await pipe(props.params.id, getPageBlocks)
+  const title = await pipe(props.params.id, getPagePropertyById('title'))
 
   return (
     <div>
-      <h1 className="dark:text-white">{'title' in title ? title.title[0].plain_text : ''}</h1>
-      {'files' in thumbnail && (
-        <img
-          src={thumbnail.files[0].name}
-          alt={'title' in title ? title.title[0].plain_text : ''}
-        />
-      )}
-      <PostDetail list={blocks.results || []} />
+      <h1 className="dark:text-white text-5xl font-taebaek">{title}</h1>
+      <Markdown>{markdownString}</Markdown>
     </div>
   )
 }
