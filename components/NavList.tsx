@@ -38,7 +38,7 @@ const NavList: React.FC<Props> = (props) => {
             <Link
               href={{
                 pathname: '/',
-                query: { c: key },
+                query: { c: navMap.get(key).name },
               }}
               className={pipe(
                 [
