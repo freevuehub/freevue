@@ -1,3 +1,5 @@
+'use client'
+
 import Markdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import { Prism } from 'react-syntax-highlighter'
@@ -38,6 +40,9 @@ const MarkdownRender: React.FC<Props> = (props) => {
           h2({ children }) {
             return <h2 className="dark:text-white text-4xl mt-6 font-taebaek">{children}</h2>
           },
+          h3({ children }) {
+            return <h3 className="dark:text-white text-2xl mt-6 font-taebaek">{children}</h3>
+          },
           ul({ children }) {
             return (
               <ol className="dark:text-white pl-7 flex flex-col gap-1 list-disc">{children}</ol>
@@ -49,11 +54,7 @@ const MarkdownRender: React.FC<Props> = (props) => {
             )
           },
           li({ children }) {
-            return (
-              <li>
-                <p className="dark:text-white text-[16px] leading-[24px]">{children}</p>
-              </li>
-            )
+            return <li className="dark:text-white text-[16px] leading-[24px]">{children}</li>
           },
         }}
       >
