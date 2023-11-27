@@ -5,7 +5,6 @@ import { property } from '@notion/util'
 import { DB_ID, INITIAL_NOTION_PROPERTIES } from '~/constant'
 
 import type { PageObjectResponse, PostProperties } from '~/types'
-import { QueryDatabaseParameters } from '@notionhq/client/build/src/api-endpoints'
 
 const notion = new Client({
   auth: process.env.NOTION_SECRET_KEY,
