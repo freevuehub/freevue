@@ -13,7 +13,7 @@ const MarkdownRender: React.FC<Props> = (props) => {
       <Markdown
         rehypePlugins={[remarkGfm]}
         components={{
-          code({ className, children, ...props }) {
+          code({ className, children }) {
             const match = /language-(\w+)/.exec(className || '')
 
             return match ? (
