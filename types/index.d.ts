@@ -9,6 +9,11 @@ export type IChild = {
   className?: IClassName
 }
 
+export type NextProps = {
+  params: Record<string, string>
+  searchParams: Record<string, string>
+}
+
 export type PostProperties = {
   id: string
   title: PageObjectResponse['properties']['title']
