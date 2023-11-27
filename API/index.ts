@@ -15,9 +15,10 @@ const pageToMarkdown = async (id: string) => {
   try {
     return (
       (await pipe(
-        id,
-        (id) => notionToMarkdown.pageToMarkdown(id),
-        notionToMarkdown.toMarkdownString,
+        notionToMarkdown.pageToMarkdown(id),
+        toAsync,
+        toArray,
+        (data) => notionToMarkdown.toMarkdownString(data),
         prop('parent')
       )) || ''
     )
@@ -33,7 +34,7 @@ export const getPostList = async () => {
         database_id: DB_ID,
         // page_size: 10,
         filter: {
-          or: [
+          and: [
             {
               property: 'type',
               type: 'select',
