@@ -50,11 +50,11 @@ body {
   background-color: #1C1C1CFF;
 }
 
-html, body {
+html, body .scroll-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-html::-webkit-scrollbar, body::-webkit-scrollbar {
+html::-webkit-scrollbar, body::-webkit-scrollbar, .scroll-hidden::-webkit-scrollbar {
   display: none;
 }
