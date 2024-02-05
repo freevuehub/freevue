@@ -11,12 +11,12 @@ const Card: React.FC<IProps> = (props) => {
     <div
       className={pipe(
         [
-          'hover:scale-[1.05]',
           'transition',
           'transition-[1000]',
           'overflow-hidden',
           'dark:bg-[#282828]',
-          'rounded-[10px]',
+          'rounded-[5px]',
+          'shadow-xl',
           props.className || '',
         ],
         join(' ')

@@ -32,7 +32,7 @@ const MarkdownRender: React.FC<Props> = (props) => {
             return <p className="dark:text-white text-[16px] leading-[24px]">{children}</p>
           },
           blockquote({ children }) {
-            return <div className="bg-content p-[10px] rounded-[8px]">{children}</div>
+            return <div className="border-[1px] border-solid p-[10px] rounded-[8px] my-[10px]">{children}</div>
           },
           h1({ children }) {
             return <h1 className="dark:text-white text-5xl mt-6 font-taebaek">{children}</h1>

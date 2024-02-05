@@ -31,18 +31,17 @@ export async function generateMetadata(props: Params): Promise<Metadata> {
   }
 }
 
-const Post: NextPage<Params> = async (props) => {
-  const markdownString = await pipe(props.params.id, getPageBlocks)
-  const title = await pipe(props.params.id, getPagePropertyById('title'))
+const Note: NextPage<Params> = async (props) => {
+  // const markdownString = await pipe(props.params.id, getPageBlocks)
+  // const title = await pipe(props.params.id, getPagePropertyById('title'))
 
   return (
     <div>
       <Card className="w-[800px] p-[20px] mx-auto">
-        <h1 className="dark:text-white text-5xl font-taebaek">{title}</h1>
-        <Markdown>{markdownString}</Markdown>
+        <h1 className="dark:text-white text-5xl font-taebaek">Note</h1>
       </Card>
     </div>
   )
 }
 
-export default Post
+export default Note

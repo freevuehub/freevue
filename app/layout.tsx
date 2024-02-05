@@ -33,23 +33,16 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <link rel="apple-touch-icon" href="/icon" sizes="32x32" />
       </head>
       <body>
-        <main className="pt-[50px]">
-          <header className="fixed top-0 left-0 right-0 h-[50px] bg-dark flex items-center dark:bg-[#282828] z-50">
-            <div className="w-[310px] text-center">
+        <main>
+          <nav className="w-[300px] bg-red-800 fixed left-0 top-0 pt-[14px] h-full hidden laptop:block dark:bg-[#282828]">
+            <div className="text-center">
               <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
                 {SITE_CONFIG.TITLE}
               </Link>
             </div>
-          </header>
-          <section className="flex">
-            <nav className="w-[300px] bg-red-800 fixed left-0 top-[50px] h-full hidden laptop:block dark:bg-[#282828]">
-              <NavList list={data} />
-            </nav>
-            <div className="desktop:w-[948px] laptop:w-[648px] mx-auto py-[24px]">{children}</div>
-            <aside className="w-[300px] bg-red-800 fixed right-0 top-[50px] h-full hidden laptop:block dark:bg-[#282828]">
-              Navigation
-            </aside>
-          </section>
+            <NavList list={data} />
+          </nav>
+          <section className="mx-auto p-[24px] pl-[324px]">{children}</section>
         </main>
       </body>
     </html>
