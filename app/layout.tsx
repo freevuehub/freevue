@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { pipe, map, toArray, prop } from '@fxts/core'
+import { pipe, map, toArray, prop, join } from '@fxts/core'
 import { getPostList } from '~/API'
 import { SITE_CONFIG } from '~/constant'
 import { NavList } from '~/components'
@@ -33,16 +33,69 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
         <link rel="apple-touch-icon" href="/icon" sizes="32x32" />
       </head>
       <body>
-        <main>
-          <nav className="w-[300px] fixed left-0 top-0 pt-[14px] h-full hidden laptop:block border-r-[1px] border-solid border-white">
+        <main className="min-h-[100vh] flex flex-col">
+          <nav
+            className={pipe(
+              [
+                'w-[300px]',
+                'fixed',
+                'left-0',
+                'top-0',
+                'pt-[14px]',
+                'h-full',
+                'hidden',
+                'laptop:flex',
+                'border-r-[1px]',
+                'border-solid',
+                'border-white',
+                'flex',
+                'flex-col',
+              ],
+              join(' ')
+            )}
+          >
             <div className="text-center">
               <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
                 {SITE_CONFIG.TITLE}
               </Link>
             </div>
             <NavList list={data} />
+            <ul className="mt-auto flex gap-[24px] flex-col p-[24px]">
+              {pipe(
+                ['portfolio', 'about'],
+                map((word) => (
+                  <li key={word}>
+                    <Link
+                      href={{ pathname: `/${word}` }}
+                      className={pipe(
+                        [
+                          'duration-300',
+                          'transition',
+                          'h-[48px]',
+                          'flex',
+                          'items-center',
+                          'px-[12px]',
+                          'border-[1px]',
+                          'border-solid',
+                          'border-transparent',
+                          'dark:text-white',
+                          'hover:border-primary',
+                        ],
+                        join(' ')
+                      )}
+                    >
+                      {word.toLocaleUpperCase('es-en')}
+                    </Link>
+                  </li>
+                )),
+                toArray
+              )}
+            </ul>
           </nav>
-          <section className="mx-auto pl-[300px]">{children}</section>
+          <section className="w-full mx-auto pl-[300px]">{children}</section>
+          <footer className="pt-[10px] mt-auto">
+            <p className="text-right dark:text-white/30">Copyright © FreeVue.</p>
+          </footer>
         </main>
       </body>
     </html>

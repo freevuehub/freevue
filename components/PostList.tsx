@@ -22,15 +22,13 @@ const PostList: React.FC<IProps> = (props) => {
     toArray
   )
 
-  console.log(list)
-
   return (
     <div className="flex flex-wrap border-t-[1px] border-white border-solid">
       {pipe(
         list,
         zipWithIndex,
         map(([index, item]) => (
-          <Link key={item.id} href={`/${item.id}`} className="w-[25%]">
+          <Link key={item.id} href={`/post/${item.id}`} className="w-[25%]">
             <div className="h-[300px] border-r-[1px] border-b-[1px] border-white">
               <div
                 className={pipe(

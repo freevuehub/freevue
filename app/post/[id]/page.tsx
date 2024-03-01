@@ -15,12 +15,16 @@ type Params = {
 
 export async function generateMetadata(props: Params): Promise<Metadata> {
   try {
+    const data = await pipe(props.params.id, getPageProperties)
+
+    const { title, thumbnail, summary } = data.properties
+
     return {
-      title: '',
+      title: pipe(title, property('title'), head, prop('plain_text')) || '',
       openGraph: {
-        images: '',
+        images: [pipe(thumbnail, property('files'), head, prop('name')) || ''],
       },
-      description: '',
+      description: pipe(summary, property('rich_text'), head, prop('plain_text')) || '',
     }
   } catch {
     return {}

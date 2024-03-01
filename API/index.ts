@@ -22,8 +22,8 @@ const pageToMarkdown = async (id: string) => {
         prop('parent')
       )) || ''
     )
-  } catch {
-    return ''
+  } catch (error) {
+    return Promise.reject(error)
   }
 }
 

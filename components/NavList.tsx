@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useSearchParams } from 'next/navigation'
 import { map, pipe, toArray, concat, reduce, isNil, join } from '@fxts/core'
 
 type Props = {
@@ -16,7 +15,6 @@ type Props = {
 }
 
 const NavList: React.FC<Props> = (props) => {
-  const router = useSearchParams()
   const navMap = pipe(
     props.list,
     concat([new Map()]),
