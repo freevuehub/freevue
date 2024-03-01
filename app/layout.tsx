@@ -60,7 +60,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
               </Link>
             </div>
             <NavList list={data} />
-            <ul className="mt-auto flex gap-[24px] flex-col p-[24px]">
+            <ul className="mt-auto flex gap-[24px] flex-col p-[24px] hidden">
               {pipe(
                 ['portfolio', 'about'],
                 map((word) => (
