@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { pipe, map, toArray, prop, join } from '@fxts/core'
 import { getPostList } from '~/API'
-import { SITE_CONFIG } from '~/constant'
+import { SITE_CONFIG, DEFAULT_OG_IMAGE } from '~/constant'
 import { NavList } from '~/components'
 
 import './globals.css'
@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: {
     template: `%s | ${SITE_CONFIG.TITLE}`,
     default: SITE_CONFIG.TITLE,
+  },
+  openGraph: {
+    images: [DEFAULT_OG_IMAGE],
   },
   description: SITE_CONFIG.DESCRIPTION,
 }
@@ -92,7 +95,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
               )}
             </ul>
           </nav>
-          <section className="w-full mx-auto pl-[300px]">{children}</section>
+          <section className="w-full mx-auto laptop:pl-[300px]">{children}</section>
           <footer className="pt-[10px] mt-auto">
             <p className="text-right dark:text-white/30">Copyright © FreeVue.</p>
           </footer>

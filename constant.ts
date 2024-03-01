@@ -1,8 +1,11 @@
 import type { PageObjectResponse } from '~/types'
 
+export const DEFAULT_OG_IMAGE =
+  'https://og.freevue.dev/api/og?title=%ED%94%84%EB%A6%AC%EB%B7%B0%20%EB%B8%94%EB%A1%9C%EA%B7%B8&desc&image'
+
 export const SITE_CONFIG = {
   TITLE: '프리뷰 블로그' as string,
-  DESCRIPTION: '' as string,
+  DESCRIPTION: '안녕하세요. 프리뷰입니다.' as string,
 }
 
 export const PROPERTIES_ID = {

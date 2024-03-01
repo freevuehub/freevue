@@ -154,6 +154,9 @@ export const getPagePropertyById =
         notion.pages.properties.retrieve
       )
 
+      if ('files' in data) {
+        return pipe(data.files[0], property('name')) || ''
+      }
       if ('results' in data) {
         return pipe(data.results[0], property('title'), prop('plain_text')) || ''
       }

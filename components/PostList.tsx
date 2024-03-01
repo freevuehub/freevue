@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { map, pipe, size, toArray, join, zipWithIndex } from '@fxts/core'
-import { Card } from '~/components'
+import { map, pipe, toArray, join, zipWithIndex } from '@fxts/core'
 
 import type { PostProperties } from '~/types'
 
@@ -27,9 +26,25 @@ const PostList: React.FC<IProps> = (props) => {
       {pipe(
         list,
         zipWithIndex,
-        map(([index, item]) => (
-          <Link key={item.id} href={`/post/${item.id}`} className="w-[25%]">
-            <div className="h-[300px] border-r-[1px] border-b-[1px] border-white">
+        map(([, item]) => (
+          <Link
+            key={item.id}
+            href={`/${item.id}`}
+            className={pipe(
+              [
+                'w-[50%]',
+                'laptop:w-[25%]',
+                'desktop:w-[20%]',
+                'border-r-[1px]',
+                'border-b-[1px]',
+                'border-white',
+                'even:border-r-0',
+                'laptop:even:border-r-[1px]',
+              ],
+              join(' ')
+            )}
+          >
+            <div className="laptop:h-[300px] h-[250px]">
               <div
                 className={pipe(
                   [
@@ -44,9 +59,9 @@ const PostList: React.FC<IProps> = (props) => {
                     'transition',
                     'duration-300',
                     'border-transparent',
-                    'hover:scale-[1.05]',
-                    'hover:border-primary',
-                    'hover:z-50',
+                    'laptop:hover:scale-[1.05]',
+                    'laptop:hover:border-primary',
+                    'laptop:hover:z-50',
                   ],
                   join(' ')
                 )}
