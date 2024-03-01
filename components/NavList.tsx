@@ -42,16 +42,17 @@ const NavList: React.FC<Props> = (props) => {
               }}
               className={pipe(
                 [
-                  'dark:text-white',
-                  'hover:bg-primary',
-                  router.get('c') === key ? 'bg-primary' : 'bg-transparent',
                   'duration-300',
                   'transition',
                   'h-[48px]',
-                  'rounded-[8px]',
                   'flex',
                   'items-center',
                   'px-[12px]',
+                  'border-[1px]',
+                  'border-solid',
+                  'border-transparent',
+                  'dark:text-white',
+                  'hover:border-primary',
                 ],
                 join(' ')
               )}

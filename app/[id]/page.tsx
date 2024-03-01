@@ -36,11 +36,11 @@ const Post: NextPage<Params> = async (props) => {
   const title = await pipe(props.params.id, getPagePropertyById('title'))
 
   return (
-    <div>
-      <Card className="w-[800px] p-[20px] mx-auto">
+    <div className="py-[60px]">
+      <div className="max-w-[800px] mx-auto">
         <h1 className="dark:text-white text-5xl font-taebaek">{title}</h1>
         <Markdown>{markdownString}</Markdown>
-      </Card>
+      </div>
     </div>
   )
 }

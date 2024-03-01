@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { map, pipe, size, toArray } from '@fxts/core'
+import { map, pipe, size, toArray, join, zipWithIndex } from '@fxts/core'
 import { Card } from '~/components'
 
 import type { PostProperties } from '~/types'
@@ -25,18 +25,38 @@ const PostList: React.FC<IProps> = (props) => {
   console.log(list)
 
   return (
-    <div className="flex flex-wrap gap-[24px] px-[24px] laptop:px-[0]">
+    <div className="flex flex-wrap border-t-[1px] border-white border-solid">
       {pipe(
         list,
-        map((item) => (
-          <Link key={item.id} href={`/${item.id}`} className="w-[calc(20%-24px)]">
-            <Card className="hover:scale-[1.03]">
-              {/*{size(item.thumbnail) && <img src={item.thumbnail[0].name} alt="" />}*/}
-              <div className="p-[12px] flex flex-col gap-[10px]">
+        zipWithIndex,
+        map(([index, item]) => (
+          <Link key={item.id} href={`/${item.id}`} className="w-[25%]">
+            <div className="h-[300px] border-r-[1px] border-b-[1px] border-white">
+              <div
+                className={pipe(
+                  [
+                    'flex',
+                    'flex-col',
+                    'p-[20px]',
+                    'h-full',
+                    'w-full',
+                    'relative',
+                    'border-solid',
+                    'border-[1px]',
+                    'transition',
+                    'duration-300',
+                    'border-transparent',
+                    'hover:scale-[1.05]',
+                    'hover:border-primary',
+                    'hover:z-50',
+                  ],
+                  join(' ')
+                )}
+              >
                 <h3 className="dark:text-white font-taebaek truncate">{item.title}</h3>
-                <p className="dark:text-white/20 text-right">{item.date?.start || ''}</p>
+                <p className="dark:text-white/20 text-right mt-auto">{item.date?.start || ''}</p>
               </div>
-            </Card>
+            </div>
           </Link>
         )),
         toArray

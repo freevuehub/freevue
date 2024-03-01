@@ -34,7 +34,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
       </head>
       <body>
         <main>
-          <nav className="w-[300px] bg-red-800 fixed left-0 top-0 pt-[14px] h-full hidden laptop:block dark:bg-[#282828]">
+          <nav className="w-[300px] fixed left-0 top-0 pt-[14px] h-full hidden laptop:block border-r-[1px] border-solid border-white">
             <div className="text-center">
               <Link href={{ pathname: '/' }} className="dark:text-white font-taebaek text-[20px]">
                 {SITE_CONFIG.TITLE}
@@ -42,7 +42,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
             </div>
             <NavList list={data} />
           </nav>
-          <section className="mx-auto p-[24px] pl-[324px]">{children}</section>
+          <section className="mx-auto pl-[300px]">{children}</section>
         </main>
       </body>
     </html>
