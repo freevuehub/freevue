@@ -66,8 +66,10 @@ const PostList: React.FC<IProps> = (props) => {
                   join(' ')
                 )}
               >
-                <h3 className="dark:text-white font-taebaek truncate">{item.title}</h3>
-                <p className="dark:text-white/20 text-right mt-auto">{item.date?.start || ''}</p>
+                <h3 className="dark:text-white font-taebaek line-clamp-2 break-keep mb-auto">
+                  {item.title}
+                </h3>
+                <p className="dark:text-white/20 text-right">{item.date?.start || ''}</p>
               </div>
             </div>
           </Link>
