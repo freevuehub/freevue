@@ -48,8 +48,8 @@ const Post: NextPage<Params> = async (props) => {
   return (
     <div className={pipe(['laptop:max-w-[800px]', 'max-w-[100%]', 'mx-auto'], join(' '))}>
       {thumbnail && <Image width={800} height={400} src={thumbnail} alt="" />}
-      <div className="laptop:px-0 px-[15px]">
-        <h1 className="dark:text-white text-5xl font-taebaek mt-[60px]">{title}</h1>
+      <div className="laptop:px-0 px-[20px]">
+        <h1 className="dark:text-white text-5xl leading-tight font-taebaek mt-[20px]">{title}</h1>
         <Markdown>{markdownString}</Markdown>
       </div>
     </div>
