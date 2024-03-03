@@ -1,3 +1,4 @@
+import { GoogleAnalytics } from '@next/third-parties/google'
 import { pipe, map, toArray, prop } from '@fxts/core'
 import { getPostList } from '~/API'
 import { SITE_CONFIG, DEFAULT_OG_IMAGE } from '~/constant'
@@ -45,6 +46,7 @@ const RootLayout = async ({ children }: { children: React.ReactNode }) => {
           </footer>
         </main>
       </body>
+      <GoogleAnalytics gaId={SITE_CONFIG.G_TAG} />
     </html>
   )
 }

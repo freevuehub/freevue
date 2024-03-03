@@ -6,6 +6,7 @@ export const DEFAULT_OG_IMAGE =
 export const SITE_CONFIG = {
   TITLE: '프리뷰 블로그' as string,
   DESCRIPTION: '안녕하세요. 프리뷰입니다.' as string,
+  G_TAG: 'G-3E6F6R2714',
 }
 
 export const PROPERTIES_ID = {
