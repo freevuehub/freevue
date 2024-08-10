@@ -10,7 +10,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      colors: {},
+      colors: {
+        primary: 'rgb(var(--freevue-color-primary) / <alpha-value>)',
+      },
     },
   },
   plugins: [],
