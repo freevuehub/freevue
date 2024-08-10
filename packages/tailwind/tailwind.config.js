@@ -9,7 +9,9 @@ module.exports = {
     './node_modules/@freevue/components/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {},
+    },
   },
   plugins: [],
 }
